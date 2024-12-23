@@ -4,6 +4,7 @@ import app.base.BaseEntity;
 import app.enumeration.Degree;
 import app.enumeration.Expertise;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "teachers")
 public class Teacher extends BaseEntity<Long> {
-
 private String firstname;
 private String lastname;
 private  String username;
@@ -27,5 +27,5 @@ private String email;
 private String nationalCode;
 private Expertise expertise;
 private Degree degree;
-private String personnelCode;
+private Long personnelCode;
 }
