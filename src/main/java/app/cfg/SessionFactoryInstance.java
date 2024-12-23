@@ -1,6 +1,7 @@
 package app.cfg;
 
 import app.entity.Admin;
+import app.entity.Lesson;
 import app.entity.Student;
 import app.entity.Teacher;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ sessionFactory = new Configuration()
         .addAnnotatedClass(Admin.class)
         .addAnnotatedClass(Student.class)
         .addAnnotatedClass(Teacher.class)
+        .addAnnotatedClass(Lesson.class)
         .buildSessionFactory();
 
     }
