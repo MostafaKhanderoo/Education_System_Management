@@ -11,7 +11,7 @@ public interface StudentRepository {
     Optional<Student> findById(Session session, Long id);
     void deleteById(Session session,Long id);
     List<Student>findAll(Session session);
-    Student update(Session session,Student student);
+    Student update(Session session,Long id,Student student);
 
 
 
