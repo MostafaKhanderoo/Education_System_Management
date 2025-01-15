@@ -9,7 +9,6 @@ import java.util.List;
 public class AdminRepositoryImpl implements AdminRepository {
     @Override
     public Admin save(Session session, Admin admin) {
-        System.out.println("is okkk");
         session.persist(admin);
         return admin;
 
@@ -17,11 +16,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 
     @Override
     public void delete(Session session, Long id) {
-       session.remove(id);
+       session.createMutationQuery("delete from Admin a where a.id =:id").setParameter("id",id).executeUpdate();
     }
 
     @Override
-    public List<Admin> findAdmin(Session session) {
-        return null;
+    public List<Admin> selectAllAdmin(Session session) {
+        return session.createQuery("from Admin",Admin.class).list();
     }
 }
