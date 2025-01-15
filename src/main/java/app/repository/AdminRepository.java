@@ -9,5 +9,6 @@ import java.util.List;
 public interface AdminRepository {
     Admin save(Session session, Admin admin);
     void delete(Session session ,Long id);
-    List<Admin> findAdmin(Session session);
+
+    List<Admin> selectAllAdmin(Session session);
 }
