@@ -14,8 +14,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "admins")
 public class Admin extends BaseEntity<Long> {
+    @Column(name = "admin_name")
+    private String adminName;
 
-    @Column(name = "admin_name" ,nullable = false   ,unique = true)
+
+    @Column(name = "admin_username" ,nullable = false   ,unique = true)
     private String username;
     @Column(name = "admin_password",unique = false)
     private String password;
