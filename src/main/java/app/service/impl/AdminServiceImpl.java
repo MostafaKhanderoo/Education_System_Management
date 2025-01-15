@@ -7,6 +7,8 @@ import app.repository.impl.AdminRepositoryImpl;
 import app.service.AdminService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final AdminRepositoryImpl adminRepository;
@@ -29,4 +31,18 @@ public class AdminServiceImpl implements AdminService {
             }
         }
     }
-}
+
+    @Override
+    public void delete(Long id) {
+        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            adminRepository.delete(session, id);
+        }
+    }
+        @Override
+        public List<Admin> selectAllAdmin () {
+            try (var session= SessionFactoryInstance.sessionFactory.openSession()) {
+                return adminRepository.selectAllAdmin(session);
+            }
+        }
+    }
+
