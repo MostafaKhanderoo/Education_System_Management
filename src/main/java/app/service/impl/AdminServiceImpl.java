@@ -5,7 +5,9 @@ import app.entity.Admin;
 import app.repository.AdminRepository;
 import app.repository.impl.AdminRepositoryImpl;
 import app.service.AdminService;
+import app.service.Authentication.AuthenticationAdmin;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -38,11 +40,24 @@ public class AdminServiceImpl implements AdminService {
             adminRepository.delete(session, id);
         }
     }
-        @Override
-        public List<Admin> selectAllAdmin () {
-            try (var session= SessionFactoryInstance.sessionFactory.openSession()) {
-                return adminRepository.selectAllAdmin(session);
-            }
+
+    @Override
+    public List<Admin> selectAllAdmin() {
+        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            return adminRepository.selectAllAdmin(session);
         }
     }
 
+    @Override
+    public Admin findByUsername(String username) {
+        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            return adminRepository.findByUsername(session, username);
+        }
+    }
+
+    public Admin login(String username, String password) {
+try(var session =SessionFactoryInstance.sessionFactory.openSession()){
+    return  adminRepository.login(session,username,password);
+}
+    }
+}
