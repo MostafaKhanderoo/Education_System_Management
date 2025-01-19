@@ -9,7 +9,7 @@ public interface AdminService {
 
     void delete(Long id);
     List<Admin> selectAllAdmin();
-
+    Admin findByUsername(String username);
 
 
 
