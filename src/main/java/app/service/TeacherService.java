@@ -10,7 +10,7 @@ public interface TeacherService {
     Teacher update(Long id ,Teacher teacher);
     void deleteTeacher(Long id);
     Teacher findTeacherById(Long id );
-    List<Teacher> showAllLesson();
+    List<Teacher> showAllTeacher();
 
 
 }
