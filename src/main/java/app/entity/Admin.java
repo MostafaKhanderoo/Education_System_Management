@@ -2,16 +2,14 @@ package app.entity;
 
 import app.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Table(name = "admins")
 public class Admin extends BaseEntity<Long> {
     @Column(name = "admin_name")
