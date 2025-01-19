@@ -1,6 +1,7 @@
 package app.repository.impl;
 
 import app.entity.Lesson;
+import app.entity.Teacher;
 import app.repository.LessonRepository;
 import org.hibernate.Session;
 
@@ -42,6 +43,11 @@ public class LessonRepositoryImpl implements LessonRepository {
     public List<Lesson> showLessonByName(Session session, String name) {
 
         return null;
+    }
+    public  void setLessonForTeacher(Session session,Long lessonId, Long teacherId){
+        var lesson = session.get(Lesson.class,lessonId);
+        var teacher =session.get(Teacher.class,teacherId);
+         lesson.setTeacher(teacher);
     }
 
 }
