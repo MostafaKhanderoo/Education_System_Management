@@ -1,11 +1,10 @@
 package app.entity;
 
 import app.base.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,8 +15,8 @@ import lombok.*;
 @ToString
 public class Student extends BaseEntity<Long> {
 
-@Column(nullable = false)
-    private  String firstname;
+    @Column(nullable = false)
+    private String firstname;
     @Column(nullable = false)
     private String lastname;
     @Column(nullable = false)
@@ -32,4 +31,8 @@ public class Student extends BaseEntity<Long> {
     private String nationalCode;
     @Column(nullable = false)
     private Long studentNumber;
+
+
+    @ManyToMany
+    List<Lesson>lessons;
 }
