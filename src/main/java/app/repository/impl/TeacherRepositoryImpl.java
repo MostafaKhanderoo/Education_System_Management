@@ -27,8 +27,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public List<Teacher> findAll(Session session) {
-        var studentList = session.createMutationQuery("from Student");
-        return (List<Teacher>) studentList;
+        List<Teacher> studentList = session.createQuery("from Teacher",Teacher.class).list();
+        return studentList;
     }
 
     @Override
