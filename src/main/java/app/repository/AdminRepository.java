@@ -11,4 +11,8 @@ public interface AdminRepository {
     void delete(Session session ,Long id);
 
     List<Admin> selectAllAdmin(Session session);
+
+    Admin findByUsername(Session session ,String username);
+    Admin login(Session session ,String username,String password);
+
 }
