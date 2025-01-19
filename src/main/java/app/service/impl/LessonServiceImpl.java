@@ -66,6 +66,19 @@ private final LessonRepositoryImpl lessonRepository;
         }
 
     }
+public void setTeacherForLesson(Long lessonId,Long teacherId){
+      try(var session=  SessionFactoryInstance.sessionFactory.openSession()){
+          try {
+              session.beginTransaction();
+              lessonRepository.setLessonForTeacher(session, lessonId ,teacherId);
+              session.getTransaction().commit();
+          }catch (Exception e ){
+              session.getTransaction().rollback();
+              throw new RuntimeException(e.getMessage());
+          }
+      }
+
+}
 
     @Override
     public Lesson updateLesson(Long id, Lesson lesson) {
