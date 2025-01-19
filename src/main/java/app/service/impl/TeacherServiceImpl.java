@@ -72,11 +72,11 @@ private final TeacherRepositoryImpl teacherRepository;
     }
 
     @Override
-    public List<Teacher> showAllLesson() {
+    public List<Teacher> showAllTeacher() {
         try(var session = SessionFactoryInstance.sessionFactory.openSession()) {
 
-            List<Teacher> teachers = teacherRepository.findAll(session);
-            return teachers;
+            return teacherRepository.findAll(session);
+
         }
     }
 }
