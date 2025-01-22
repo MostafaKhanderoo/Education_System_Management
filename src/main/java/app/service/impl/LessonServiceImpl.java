@@ -32,11 +32,11 @@ private final LessonRepositoryImpl lessonRepository;
     }
 
     @Override
-    public void deleteLesson(Long id) {
+    public void deleteLesson(Long lessonNumber) {
         try(var session = SessionFactoryInstance.sessionFactory.openSession()){
             try {
                 session.beginTransaction();
-                lessonRepository.deleteLessen(session,id);
+                lessonRepository.deleteLessen(session,lessonNumber);
                 session.getTransaction().commit();
 
             }catch (Exception e){
@@ -81,11 +81,11 @@ public void setTeacherForLesson(Long lessonId,Long teacherId){
 }
 
     @Override
-    public Lesson updateLesson(Long id, Lesson lesson) {
+    public Lesson updateLesson(Long lessonNumber, Lesson lesson) {
        try(var session=SessionFactoryInstance.sessionFactory.openSession()){
          try {
              session.beginTransaction();
-             lessonRepository.update(session,id,lesson);
+             lessonRepository.update(session,lessonNumber,lesson);
              session.getTransaction().commit();
              return lesson;
          }catch (Exception e){
