@@ -1,8 +1,10 @@
 package app.service.impl;
 
 import app.cfg.SessionFactoryInstance;
+import app.entity.Lesson;
 import app.entity.Teacher;
 import app.repository.impl.TeacherRepositoryImpl;
+import app.service.Authentication.AuthenticationTeacher;
 import app.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,11 +30,11 @@ private final TeacherRepositoryImpl teacherRepository;
     }
 
     @Override
-    public Teacher update(Long id, Teacher teacher) {
+    public Teacher update(Long personnelCode, Teacher teacher) {
         try(var session = SessionFactoryInstance.sessionFactory.openSession()){
             try {
                 session.beginTransaction();
-                teacherRepository.update(session,id,teacher);
+                teacherRepository.update(session,personnelCode,teacher);
                 session.getTransaction().commit();
                 return teacher;
             }catch (Exception e){
@@ -46,11 +48,11 @@ private final TeacherRepositoryImpl teacherRepository;
     }
 
     @Override
-    public void deleteTeacher(Long id) {
+    public void deleteTeacher(Long personnelCode) {
         try(var session = SessionFactoryInstance.sessionFactory.openSession()){
             try{
                 session.beginTransaction();
-                teacherRepository.deleteById(session,id);
+                teacherRepository.deleteByPersonnelCode(session,personnelCode);
                 session.getTransaction().commit();
 
             }catch (Exception e ){
@@ -77,6 +79,25 @@ private final TeacherRepositoryImpl teacherRepository;
 
             return teacherRepository.findAll(session);
 
+        }
+    }
+    public Boolean login(Long personalCode,String password){
+        try(var session =SessionFactoryInstance.sessionFactory.openSession()){
+          try{
+              session.beginTransaction();
+              teacherRepository.login(session,personalCode,password);
+                session.getTransaction().commit();
+                return true;
+          }catch (Exception e){
+              throw new RuntimeException(e.getMessage());
+          }
+
+        }
+    }
+    public List<Lesson>lessonsOfTeacher(){
+        try(var session= SessionFactoryInstance.sessionFactory.openSession()){
+         var personnelCode=   AuthenticationTeacher.getLoggedInTeacher().getPersonnelCode();
+          return teacherRepository.lessonsForTeacher(session,personnelCode);
         }
     }
 }
