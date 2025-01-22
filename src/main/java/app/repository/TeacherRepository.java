@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TeacherRepository {
     Teacher save(Session session, Teacher teacher);
     Optional<Teacher> findById(Session session, Long id);
-    void deleteById(Session session,Long id);
+    void deleteByPersonnelCode(Session session,Long personnelCode);
     List<Teacher> findAll(Session session);
-    Teacher update(Session session,Long id,Teacher teacher);
+    Teacher update(Session session,Long personnelCode,Teacher teacher);
 }
