@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "students")
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class Student extends BaseEntity<Long> {
 
     @Column(nullable = false)
@@ -33,6 +34,6 @@ public class Student extends BaseEntity<Long> {
     private Long studentNumber;
 
 
-    @ManyToMany
-    List<Lesson>lessons;
+    @OneToMany (mappedBy = "student")
+    List<StudentLesson>studentLessons;
 }
