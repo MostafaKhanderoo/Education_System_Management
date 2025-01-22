@@ -16,13 +16,13 @@ public class LessonRepositoryImpl implements LessonRepository {
     }
 
     @Override
-    public void deleteLessen(Session session, Long id) {
-        session.createMutationQuery("delete from Lesson a where a.id = :id ").setParameter("id",id).executeUpdate();
+    public void deleteLessen(Session session, Long lessonNumber) {
+        session.createMutationQuery("delete from Lesson a where a.lessonNumber = :lessonNumber ").setParameter("lessonNumber",lessonNumber).executeUpdate();
     }
 
     @Override
-    public Lesson update(Session session, Long id, Lesson lesson) {
-        lesson.setId(id);
+    public Lesson update(Session session, Long lessonNumber, Lesson lesson) {
+        lesson.setLessonNumber(lessonNumber);
         session.merge(lesson);
         return lesson;
     }
