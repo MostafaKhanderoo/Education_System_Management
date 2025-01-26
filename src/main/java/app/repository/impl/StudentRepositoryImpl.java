@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.Root;
 import lombok.ToString;
 import org.hibernate.Session;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @ToString
@@ -23,6 +24,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student save(Session session, Student student) {
         session.persist(student);
+        student.setUsername(student.getStudentNumber().toString());
+        student.setPassword(student.getNationalCode());
         return student;
 
     }
@@ -72,24 +75,12 @@ public class StudentRepositoryImpl implements StudentRepository {
         return false;
     }
 
-    public StudentLesson chooseCourseForStudent(Session session, Long lessonNumber) {
-        var lessonChooses = session.createQuery("from Lesson a where a.lessonNumber = :lessonNumber", Lesson.class).setParameter("lessonNumber", lessonNumber).getSingleResult();
-        var loginStudent = AuthenticationStudent.getLoggedInStudent();
-        StudentLesson studentLesson =new StudentLesson();
-        studentLesson.setStudent(loginStudent);
-        studentLesson.setLesson(lessonChooses);
-        session.merge(studentLesson);
-        return studentLesson;
-    }
 
-    public List<StudentLesson> seeStudentByLessonId(Session session, Long lessonNumber) {
-        var studentLessons = session.createQuery("select student.studentNumber from  StudentLesson a where a.lesson.lessonNumber = :lessonNumber", StudentLesson.class).setParameter("lessonNumber", lessonNumber).list();
-        return studentLessons;
-    }
 
-    public List<StudentLesson> seeLessonByStudentId(Session session, Long studentNumber) {
-        var studentLessons = session.createQuery("select lesson.lessonName from  StudentLesson a where a.student.studentNumber = :studentNumber", StudentLesson.class).setParameter("studentNumber", studentNumber).list();
-        return studentLessons;
+    public void changeUsernameAmdPassword(Session session,Long studentNumber, String username,String password){
+var student= session.createQuery("from Student a where a.studentNumber = :studentNumber",Student.class).setParameter("studentNumber",studentNumber).getSingleResult();
+student.setUsername(username);
+student.setPassword(password);
     }
 }
 
