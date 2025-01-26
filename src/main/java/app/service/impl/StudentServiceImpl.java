@@ -6,6 +6,7 @@ import app.entity.StudentLesson;
 import app.repository.StudentRepository;
 import app.repository.impl.StudentRepositoryImpl;
 import app.service.Authentication.AuthenticationStudent;
+import app.service.Authentication.AuthenticationTeacher;
 import app.service.StudentService;
 import lombok.RequiredArgsConstructor;
 
@@ -105,34 +106,22 @@ public class StudentServiceImpl implements StudentService {
 
         }
     }
-    public void chooseLessonForStudent(Long lessonNumber){
+
+
+
+public void changeUsernameAndPassword(String username,String password){
         try(var session =SessionFactoryInstance.sessionFactory.openSession()){
-          try{
-              session.beginTransaction();
-
-              studentRepository.chooseCourseForStudent(session,lessonNumber);
-              session.getTransaction().commit();
-
-
-          }catch (Exception e ){
-              session.getTransaction().rollback();
-              throw new RuntimeException(e.getMessage());
-          }
+            try {
+                session.beginTransaction();
+                var studentNumber= AuthenticationStudent.getLoggedInStudent().getStudentNumber();
+                studentRepository.changeUsernameAmdPassword(session,studentNumber,username,password);
+                session.getTransaction().commit();
+            }catch (Exception e){
+                session.getTransaction().rollback();
+                throw new RuntimeException(e.getMessage());
+            }
         }
-    }
-    public List<StudentLesson> seeStudentByLessonNumber(Long lessonNumber) {
-        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
-            return studentRepository.seeStudentByLessonId(session, lessonNumber);
-        }
-    }
-
-    public List<StudentLesson> seeLessonByStudentNumber(Long studentNumber){
-        try(var session =SessionFactoryInstance.sessionFactory.openSession()){
-            return studentRepository.seeLessonByStudentId(session,studentNumber);
-        }
-    }
-
-
+}
 //    public boolean isExistStudent(String username) {
 //        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
 //            return studentRepository.isExist(session, username);
