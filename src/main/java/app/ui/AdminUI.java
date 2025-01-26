@@ -5,50 +5,45 @@ import app.entity.Student;
 import app.entity.Teacher;
 import app.enumeration.Degree;
 import app.enumeration.Expertise;
-import app.repository.impl.AdminRepositoryImpl;
-import app.repository.impl.LessonRepositoryImpl;
-import app.repository.impl.StudentRepositoryImpl;
-import app.repository.impl.TeacherRepositoryImpl;
+import app.repository.impl.*;
 import app.service.Authentication.AuthenticationAdmin;
-import app.service.impl.AdminServiceImpl;
-import app.service.impl.LessonServiceImpl;
-import app.service.impl.StudentServiceImpl;
-import app.service.impl.TeacherServiceImpl;
+import app.service.impl.*;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class AdminUI {
-    private static StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
-    private static StudentServiceImpl studentService = new StudentServiceImpl(studentRepository);
-    private static LessonRepositoryImpl lessonRepository = new LessonRepositoryImpl();
-    private static LessonServiceImpl lessonService = new LessonServiceImpl(lessonRepository);
-    private static TeacherRepositoryImpl teacherRepository = new TeacherRepositoryImpl();
-    private static TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
-    private static AdminRepositoryImpl adminRepository = new AdminRepositoryImpl();
-    private static AdminServiceImpl adminService = new AdminServiceImpl(adminRepository);
-    private static Scanner scanner = new Scanner(System.in);
-    private static boolean onlineAdmin = true;
-    private static Teacher teacher = new Teacher();
+    final private static StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
+    final private static StudentServiceImpl studentService = new StudentServiceImpl(studentRepository);
+    final private static LessonRepositoryImpl lessonRepository = new LessonRepositoryImpl();
+    final private static LessonServiceImpl lessonService = new LessonServiceImpl(lessonRepository);
+    final private static TeacherRepositoryImpl teacherRepository = new TeacherRepositoryImpl();
+    final private static TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
+    final private static AdminRepositoryImpl adminRepository = new AdminRepositoryImpl();
+    final private static AdminServiceImpl adminService = new AdminServiceImpl(adminRepository);
+    final private static StudentCourseRepositoryImpl studentCourseRepository = new StudentCourseRepositoryImpl();
+    final private static StudentCourseServiceImpl studentCourseService = new StudentCourseServiceImpl(studentCourseRepository);
+
+    private static final Scanner scanner = new Scanner(System.in);
 
 
     public static void adminMenu() {
+        boolean onlineAdmin = true;
         if (onlineAdmin) {
-            System.out.println("Welcome Login page");
+            System.out.println("Welcome Admin Login page");
             System.out.print("username: ");
-            String username = scanner.nextLine();
+            String username = scanner.next();
             System.out.print("password: ");
-            String password = scanner.nextLine();
+            String password = scanner.next();
             adminService.login(username, password);
             System.out.println();
             System.out.println("Welcome " + AuthenticationAdmin.getLoggedInAdmin().getAdminName());
+            System.out.println();
 
         } else {
             onlineAdmin = false;
         }
-        boolean onlineAdmin1 = true;
-
-        while (onlineAdmin1) {
+        while (onlineAdmin) {
             System.out.println("1.Teachers Management Menu");
             System.out.println("2.Students Management Menu");
             System.out.println("3.Lessons Management Menu");
@@ -56,23 +51,11 @@ public class AdminUI {
             System.out.print("choose: ");
             int input = scanner.nextInt();
             switch (input) {
-                case 1:
-                    teacherManagementMenu();
-                    break;
-                case 2:
-                    studentManagementMenu();
-
-                    break;
-                case 3:
-                    lessonManagementMenu();
-                    break;
-                case 4:
-                    onlineAdmin1 = false;
-                    // Main.isExist =false;
-                    break;
-                default:
-
-                    System.out.println("invalid number");
+                case 1 -> teacherManagementMenu();
+                case 2 -> studentManagementMenu();
+                case 3 -> lessonManagementMenu();
+                case 4 -> onlineAdmin = false;
+                default -> System.out.println("invalid number");
             }
 
             // Student Management Menu
@@ -86,31 +69,51 @@ public class AdminUI {
         String firstname = scanner.next();
         System.out.print("lastname: ");
         String lastname = scanner.next();
-        System.out.print("username: ");
-        String username = scanner.next();
-        System.out.print("password: ");
-        String password = scanner.next();
         System.out.print("phoneNumber: ");
         String phoneNumber = scanner.next();
         System.out.print("email: ");
         String email = scanner.next();
         System.out.print("nationalCode: ");
         String nationalCode = scanner.next();
-        Expertise expertise;
-        Degree degree;
         System.out.print("personnelCode: ");
         Long personnelCode = scanner.nextLong();
+        System.out.println("Expertise: ");
+        System.out.println("1.COMPUTER");
+        System.out.println("2.LANGUAGE");
+        System.out.println("3.ACCOUNTING");
+        System.out.println("4.MEDICINE");
+        System.out.println("5.ENGINEERING");
+        System.out.print("choose: ");
+        int input =scanner.nextInt();
+        switch (input){
+            case 1->teacher.setExpertise(Expertise.COMPUTER);
+            case 2->teacher.setExpertise(Expertise.LANGUAGE);
+            case 3->teacher.setExpertise(Expertise.ACCOUNTING);
+            case 4->teacher.setExpertise(Expertise.MEDICINE);
+            case 5->teacher.setExpertise(Expertise.ENGINEERING);
+            default -> teacher.setExpertise(null);
+        }
+        System.out.println("Degree");
+        System.out.println("1.BACHELOR");
+        System.out.println("2.MASTER");
+        System.out.println("3.DOCTORAL");
+        System.out.print("choose");
+        int input2 = scanner.nextInt();
+        switch (input2){
+            case 2->teacher.setDegree(Degree.MASTER);
+            case 3 ->teacher.setDegree(Degree.DOCTORAL);
+            default -> teacher.setDegree(Degree.BACHELOR);
+        }
         teacher.setFirstname(firstname);
         teacher.setLastname(lastname);
-        teacher.setUsername(username);
-        teacher.setPassword(password);
         teacher.setPhoneNumber(phoneNumber);
         teacher.setEmail(email);
         teacher.setNationalCode(nationalCode);
-        System.out.print("Expertise: ");
-        teacher.setExpertise(Expertise.ENGINEERING);
-        System.out.print("Degree: ");
-        teacher.setDegree(Degree.TEST1);
+
+//        System.out.print("Expertise: ");
+//        teacher.setExpertise(Expertise.ENGINEERING);
+//        System.out.print("Degree: ");
+//        teacher.setDegree(Degree.TEST1);
         teacher.setPersonnelCode(personnelCode);
         teacherService.save(teacher);
     }
@@ -142,8 +145,7 @@ public class AdminUI {
         String email = scanner.next();
         System.out.print("nationalCode: ");
         String nationalCode = scanner.next();
-        Expertise expertise;
-        Degree degree;
+
         teacher.setFirstname(firstname);
         teacher.setLastname(lastname);
         teacher.setUsername(username);
@@ -151,10 +153,33 @@ public class AdminUI {
         teacher.setPhoneNumber(phoneNumber);
         teacher.setEmail(email);
         teacher.setNationalCode(nationalCode);
-        System.out.print("Expertise: ");
-        teacher.setExpertise(Expertise.ENGINEERING);
-        System.out.print("Degree: ");
-        teacher.setDegree(Degree.TEST1);
+        System.out.println("Expertise: ");
+        System.out.println("1.COMPUTER");
+        System.out.println("2.LANGUAGE");
+        System.out.println("3.ACCOUNTING");
+        System.out.println("4.MEDICINE");
+        System.out.println("5.ENGINEERING");
+        System.out.print("choose: ");
+        int input =scanner.nextInt();
+        switch (input){
+            case 1->teacher.setExpertise(Expertise.COMPUTER);
+            case 2->teacher.setExpertise(Expertise.LANGUAGE);
+            case 3->teacher.setExpertise(Expertise.ACCOUNTING);
+            case 4->teacher.setExpertise(Expertise.MEDICINE);
+            case 5->teacher.setExpertise(Expertise.ENGINEERING);
+            default -> teacher.setExpertise(null);
+        }
+        System.out.println("Degree");
+        System.out.println("1.BACHELOR");
+        System.out.println("2.MASTER");
+        System.out.println("3.DOCTORAL");
+        System.out.print("choose");
+        int input2 = scanner.nextInt();
+        switch (input2){
+            case 2->teacher.setDegree(Degree.MASTER);
+            case 3 ->teacher.setDegree(Degree.DOCTORAL);
+            default -> teacher.setDegree(Degree.BACHELOR);
+        }
         teacherService.update(personnelCode, teacher);
     }
 
@@ -169,29 +194,14 @@ public class AdminUI {
         Boolean onlineInTeacherMenu = true;
         while (onlineInTeacherMenu) {
             switch (input) {
-                case 1:
-                    System.out.println(teacherService.showAllTeacher());
-                    onlineInTeacherMenu = false;
-                    break;
-                case 2:
-                    addNewTeacher();
-                    onlineInTeacherMenu = false;
-                    break;
-                case 3:
-                    removeTeacher();
-                    onlineInTeacherMenu = false;
-                    break;
-                case 4:
-                    setLessonForTeacher();
-                    onlineInTeacherMenu = false;
-                    break;
-                case 5:
-                    updateTeacher();
-                    onlineInTeacherMenu = false;
-                    break;
-                default:
-                    System.out.println("invalid number");
+                case 1 -> System.out.println(teacherService.showAllTeacher());
+                case 2 -> addNewTeacher();
+                case 3 -> removeTeacher();
+                case 4 -> setLessonForTeacher();
+                case 5 -> updateTeacher();
+                default -> System.out.println("invalid number");
             }
+            return;
         }
     }
 
@@ -230,7 +240,7 @@ public class AdminUI {
         System.out.print("enter student studentNumber: ");
         Long studentNumber = scanner.nextLong();
         System.out.println("lessons of student");
-        System.out.println(studentService.seeLessonByStudentNumber(studentNumber));
+        System.out.println(studentCourseService.seeLessonByStudentNumber(studentNumber));
     }
 
     static void seeStudentsOfLessonNumber() {
@@ -238,7 +248,7 @@ public class AdminUI {
         System.out.println();
         System.out.print("enter lessonNumber");
         Long lessonNumber = scanner.nextLong();
-        System.out.println(studentService.seeStudentByLessonNumber(lessonNumber));
+        System.out.println(studentCourseService.seeStudentByLessonNumber(lessonNumber));
     }
 
     static void addNewStudent() {
@@ -248,10 +258,6 @@ public class AdminUI {
         String firstName = scanner.next();
         System.out.print("lastName: ");
         String lastName = scanner.next();
-        System.out.print("username: ");
-        String username = scanner.next();
-        System.out.print("password: ");
-        String password = scanner.next();
         System.out.print("phoneNumber: ");
         String phoneNumber = scanner.next();
         System.out.print("email: ");
@@ -261,12 +267,10 @@ public class AdminUI {
         System.out.print("studentNumber: ");
         Long studentNumber = scanner.nextLong();
         student.setStudentNumber(studentNumber);
-        student.setUsername(username);
         student.setNationalCode(nationalCode);
         student.setEmail(email);
         student.setFirstname(firstName);
         student.setPhoneNumber(phoneNumber);
-        student.setPassword(password);
         student.setLastname(lastName);
         studentService.save(student);
         System.out.println("student saved");
@@ -366,11 +370,33 @@ public class AdminUI {
         int capacity = scanner.nextInt();
         System.out.print("LessonNumber: ");
         Long lessonNumber = scanner.nextLong();
+        System.out.println("choose Future Time Month or day to start lesson");
+        System.out.println("1.set by month");
+        System.out.println("2.set by day");
+        System.out.print("choose: ");
+        int input = scanner.nextInt();
+
+        switch (input) {
+            case 1:
+                System.out.print("enter Future months to start lesson: ");
+                int months = scanner.nextInt();
+                lesson.setStartLessonTime(LocalDateTime.now().plusMonths(months));
+                break;
+            case 2:
+                System.out.print("enter Future days to start lesson: ");
+                int days = scanner.nextInt();
+                lesson.setStartLessonTime(LocalDateTime.now().plusDays(days));
+                break;
+            default:
+                System.out.println("invalid number");
+                break;
+        }
+
         lesson.setLessonName(lessonName);
         lesson.setCapacity(capacity);
         lesson.setUtil(util);
         lesson.setLessonNumber(lessonNumber);
-        lesson.setStartLessonTime(LocalDateTime.now());
+
         lessonService.save(lesson);
         System.out.println("lesson saved");
     }
@@ -442,7 +468,8 @@ public class AdminUI {
                 default:
                     System.out.println("invalid number");
 
-            }return;
+            }
+            return;
         }
     }
 }
