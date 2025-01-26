@@ -2,6 +2,7 @@ package app.service.impl;
 
 import app.cfg.SessionFactoryInstance;
 import app.entity.Lesson;
+import app.entity.StudentLesson;
 import app.entity.Teacher;
 import app.repository.impl.TeacherRepositoryImpl;
 import app.service.Authentication.AuthenticationTeacher;
@@ -94,10 +95,27 @@ private final TeacherRepositoryImpl teacherRepository;
 
         }
     }
+
     public List<Lesson>lessonsOfTeacher(){
         try(var session= SessionFactoryInstance.sessionFactory.openSession()){
          var personnelCode=   AuthenticationTeacher.getLoggedInTeacher().getPersonnelCode();
           return teacherRepository.lessonsForTeacher(session,personnelCode);
         }
     }
+    public void changeUsernameAndPassword(String username,String password){
+        try(var session =SessionFactoryInstance.sessionFactory.openSession()){
+            try {
+                session.beginTransaction();
+                var personnelCode =AuthenticationTeacher.getLoggedInTeacher().getPersonnelCode();
+                teacherRepository.changeUsernameAmdPassword(session,personnelCode,username,password);
+                session.getTransaction().commit();
+            }catch (Exception e){
+                session.getTransaction().rollback();
+            }
+
+
+        }
+    }
+
+
 }
