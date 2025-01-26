@@ -1,5 +1,6 @@
 package app;
 
+import app.entity.Lesson;
 import app.repository.impl.AdminRepositoryImpl;
 import app.repository.impl.LessonRepositoryImpl;
 import app.repository.impl.StudentRepositoryImpl;
@@ -12,6 +13,7 @@ import app.ui.AdminUI;
 import app.ui.StudentUI;
 import app.ui.TeacherUI;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
@@ -29,12 +31,30 @@ public class Main {
     private static AdminServiceImpl adminService = new AdminServiceImpl(adminRepository);
 
     public static void main(String[] args) {
-//        Lesson lesson = new Lesson();
-//        lesson.setLessonNumber(321l);
-//        lesson.setLessonName("varzesh");
-//        lesson.setUtil(2);
-//        lesson.setCapacity(30);
-//        lesson.setStartLessonTime(LocalDateTime.now());
+
+
+
+//  Lesson lesson = new Lesson();
+//  lesson.setLessonNumber(1234l);
+//  lesson.setLessonName("homeless2");
+//  lesson.setUtil(2);
+//  lesson.setCapacity(20);
+//  System.out.println("1 set for month 2 set by day");
+//  lesson.setStartLessonTime(LocalDateTime.now());
+//  int s = scanner.nextInt();
+//  switch (s){
+//      case 1:
+//          lesson.setStartLessonTime(LocalDateTime.now().plusMonths(2));
+//          break;
+//      case 2:
+//          lesson.setStartLessonTime(LocalDateTime.now().plusDays(10));
+//          break;
+//      default:
+//          System.out.println("not errror");
+//  }
+ // lessonService.save(lesson);
+
+
 //
 //
 //        Student student =  new Student();
@@ -88,6 +108,7 @@ public class Main {
         System.out.println("1.Admin");
         System.out.println("2.teacher");
         System.out.println("3.Student");
+        System.out.println("4.close app");
         System.out.print("choose: ");
         input = scanner.nextInt();
         while (isExist) {
@@ -101,18 +122,27 @@ public class Main {
                 case 3:
                     StudentUI.studentMenu();
                     break;
+                case 4:
+                    isExist=false;
+                    System.out.println("app closed!");
+                    break;
                 default:
                     System.out.println("invalid number");
 
-            }
+            }return;
+
     }
+
+
+
+
 //        Admin admin = new Admin();
 //        admin.setAdminName("mosi");
 //        admin.setUsername("admin");
 //        admin.setPassword("1234");
 //        adminService.save(admin);
-        }
     }
+}
 
 //lessonService.setTeacherForLesson(1l,3l);
 //    }
@@ -131,27 +161,27 @@ public class Main {
 //        Lesson lesson = new Lesson();
 //        lesson.setLessonName("amalll");
 //        lessonService.save(lesson);
-       //    Admin admin = new Admin("mostafa", "1234");
+//    Admin admin = new Admin("mostafa", "1234");
 //
-        // adminService.save(admin);
-  //      StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
+// adminService.save(admin);
+//      StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
 //        StudentServiceImpl studentService = new StudentServiceImpl(studentRepository);
 //
-        // Student student = new Student("mamad","mamamdi","mm","mm","091123","mamama@gmail.com","12343",2L);
-        //  studentService.save(student);
+// Student student = new Student("mamad","mamamdi","mm","mm","091123","mamama@gmail.com","12343",2L);
+//  studentService.save(student);
 //        var test = studentService.findById(1L);
 //
-        // System.out.println(studentService.findAll());
+// System.out.println(studentService.findAll());
 //studentService.deleteById(2L);
 //        Student studentUpp = new Student("saed343", "khanderoo1223", "seead", "saeed1223", "0933", "seed@gmail.com", "2345", 4L);
 //        studentService.update(1l, studentUpp);
 //studentService.isExistStudent("saeed");
-        //   studentService.findAll();
+//   studentService.findAll();
 ///**
 // * @param sseeso
 // *
 // * @return todo test code
 // *
 // */
-    //}
+//}
 
