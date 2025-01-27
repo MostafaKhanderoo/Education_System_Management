@@ -46,14 +46,21 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     public boolean login(Session session, Long personnelCode, String password) {
-        var teacher = session.createQuery("from Teacher a where a.personnelCode =:personnelCode", Teacher.class).setParameter("personnelCode", personnelCode).getSingleResult();
-        if (teacher.getPersonnelCode().equals(personnelCode) && (teacher.getPassword().equals(password))) {
-            AuthenticationTeacher.setLoggedTeacher(teacher);
-            return true;
-        } else
-            System.out.println("personnelCode or password is wrong!");
-        return false;
-    }
+        try {
+            var teacher = session.createQuery("from Teacher a where a.personnelCode =:personnelCode", Teacher.class).setParameter("personnelCode", personnelCode).getSingleResult();
+            if (teacher.getPersonnelCode().equals(personnelCode) && (teacher.getPassword().equals(password))) {
+                AuthenticationTeacher.setLoggedTeacher(teacher);
+                return true;
+
+            } else
+                System.out.println("personnelCode or password is wrong!");
+
+            return false;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        }
+
 
     public List<Lesson> lessonsForTeacher(Session session, Long personnelCode) {
         List<Lesson> lessonsOfTeacher = session.createQuery("from  Lesson a where a.teacher.personnelCode = :personnelCode", Lesson.class).setParameter("personnelCode", personnelCode).list();
