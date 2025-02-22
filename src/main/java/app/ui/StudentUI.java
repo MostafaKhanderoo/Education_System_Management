@@ -39,6 +39,7 @@ public class StudentUI {
             switch (input) {
                 case 1:
                     System.out.println(lessonService.AllLesson());
+                    System.out.println();
                     break;
                 case 2:
                     chooseLesson();
