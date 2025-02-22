@@ -24,9 +24,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student save(Session session, Student student) {
         session.persist(student);
-        student.setUsername(student.getStudentNumber().toString());
-        student.setPassword(student.getNationalCode());
-        return student;
+         return student;
 
     }
 
