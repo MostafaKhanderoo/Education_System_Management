@@ -66,11 +66,11 @@ private final LessonRepositoryImpl lessonRepository;
         }
 
     }
-public void setTeacherForLesson(Long lessonId,Long teacherId){
+public void setTeacherForLesson(Long lessonNumber,Long teacherPersonnelCode){
       try(var session=  SessionFactoryInstance.sessionFactory.openSession()){
           try {
               session.beginTransaction();
-              lessonRepository.setLessonForTeacher(session, lessonId ,teacherId);
+              lessonRepository.setLessonForTeacher(session, lessonNumber ,teacherPersonnelCode);
               session.getTransaction().commit();
           }catch (Exception e ){
               session.getTransaction().rollback();
