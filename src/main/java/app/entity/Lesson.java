@@ -22,7 +22,6 @@ public class Lesson extends BaseEntity<Long> {
     private int util;
     @Size(min = 10,max = 40)
     private int capacity;
-    @Temporal(TemporalType.DATE)
 private LocalDateTime startLessonTime;
 
 private Long lessonNumber;
