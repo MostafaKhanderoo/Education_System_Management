@@ -17,7 +17,7 @@ public class StudentCourseRepositoryImpl {
         var loginStudent = AuthenticationStudent.getLoggedInStudent();
         StudentLesson studentLesson = new StudentLesson();
         boolean isAfter = lessonChooses.getStartLessonTime().isAfter(LocalDateTime.now());
-        boolean capacityIsFull = lessonChooses.getCapacity() > 0;
+        boolean capacityIsFull = lessonChooses.getCapacity() >= 0;
         if (isAfter) {
             if (capacityIsFull) {
                 studentLesson.setStudent(loginStudent);
