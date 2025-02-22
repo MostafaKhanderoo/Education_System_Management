@@ -100,9 +100,10 @@ public class AdminUI {
         System.out.print("choose");
         int input2 = scanner.nextInt();
         switch (input2){
+            case 1-> teacher.setDegree(Degree.BACHELOR);
             case 2->teacher.setDegree(Degree.MASTER);
             case 3 ->teacher.setDegree(Degree.DOCTORAL);
-            default -> teacher.setDegree(Degree.BACHELOR);
+            default -> teacher.setDegree(null);
         }
         teacher.setFirstname(firstname);
         teacher.setLastname(lastname);
@@ -208,13 +209,13 @@ public class AdminUI {
     static void setLessonForTeacher() {
         System.out.println(lessonService.AllLesson());
         System.out.println();
-        System.out.print("choose one lesson by id: ");
-        Long lessonId = scanner.nextLong();
+        System.out.print("choose one lesson by lessonNumber: ");
+        Long lessonNumber = scanner.nextLong();
         System.out.println(teacherService.showAllTeacher());
         System.out.println();
-        System.out.print("choose one teacher by id: ");
-        Long teacherId = scanner.nextLong();
-        lessonService.setTeacherForLesson(lessonId, teacherId);
+        System.out.print("choose one teacher by personnelCode: ");
+        Long teacherPersonnelCode = scanner.nextLong();
+        lessonService.setTeacherForLesson(lessonNumber, teacherPersonnelCode);
         System.out.println("added");
 
     }
@@ -229,7 +230,7 @@ public class AdminUI {
         System.out.println(studentService.findAll());
         System.out.println();
         System.out.println();
-        System.out.print("enter student id: ");
+        System.out.print("enter studentNumber: ");
         Long studentNumber = scanner.nextLong();
         studentService.deleteByStudentNumber(studentNumber);
     }
@@ -237,7 +238,7 @@ public class AdminUI {
     static void seeLessonsOfStudent() {
         System.out.println(studentService.findAll());
         System.out.println();
-        System.out.print("enter student studentNumber: ");
+        System.out.print("enter studentNumber: ");
         Long studentNumber = scanner.nextLong();
         System.out.println("lessons of student");
         System.out.println(studentCourseService.seeLessonByStudentNumber(studentNumber));
@@ -246,7 +247,7 @@ public class AdminUI {
     static void seeStudentsOfLessonNumber() {
         System.out.println(lessonService.AllLesson());
         System.out.println();
-        System.out.print("enter lessonNumber");
+        System.out.print("enter lessonNumber: ");
         Long lessonNumber = scanner.nextLong();
         System.out.println(studentCourseService.seeStudentByLessonNumber(lessonNumber));
     }
@@ -325,36 +326,34 @@ public class AdminUI {
         int input = scanner.nextInt();
         while (onlineInStudentMenu) {
             switch (input) {
-                case 1:
+                case 1 -> {
                     System.out.println(studentService.findAll());
                     onlineInStudentMenu = false;
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     addNewStudent();
                     onlineInStudentMenu = false;
-                    break;
-
-                case 3:
+                }
+                case 3 -> {
                     deleteStudent();
                     onlineInStudentMenu = false;
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     seeLessonsOfStudent();
                     onlineInStudentMenu = false;
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     seeStudentsOfLessonNumber();
                     onlineInStudentMenu = false;
-                    break;
-                case 6:
-
+                }
+                case 6 -> {
                     updateStudent();
                     onlineInStudentMenu = false;
-                    break;
-
-                default:
+                }
+                default -> {
                     System.out.println("invalid number!!");
                     onlineInStudentMenu = false;
+                }
             }
 
         }
