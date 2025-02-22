@@ -21,9 +21,9 @@ public class TeacherUI {
 
     public static void teacherMenu() {
         System.out.println("teacher login");
-        System.out.print("enter your personnelCode: ");
+        System.out.print("enter your username: ");
         Long personnelCode = scanner.nextLong();
-        System.out.println("enter your password");
+        System.out.print("enter your password: ");
         String password = scanner.next();
 
         var teacherLog = teacherService.login(personnelCode, password);
@@ -38,28 +38,30 @@ public class TeacherUI {
             System.out.println("4.update username or password");
             System.out.println("5.logout");
             System.out.print("choose: ");
+
+
             int input = scanner.nextInt();
 
             switch (input) {
                 case 1:
                     System.out.println(teacherService.lessonsOfTeacher());
-                    break;
+break;
                 case 2:
                     seeStudentByLessonNumber();
-                    break;
+break;
                 case 3:
                     setScoreForStudent();
-                    break;
+break;
                 case 4:
                     updateUsernameAdnPassword();
+                    break;
                 case 5:
                     teacherLog = false;
-                    break;
                 default:
                     System.out.println("invalid number!  ");
 
             }
-            return;
+
 
         }
 
