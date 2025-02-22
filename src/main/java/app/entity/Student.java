@@ -26,12 +26,10 @@ public class Student extends BaseEntity<Long> {
     @Column(nullable = false)
     @Size(max = 30)
     private String lastname;
-    @Column(nullable = false ,unique = true)
+
 @UniqueElements(message = "this username is not available")
     private String username;
 
-    @Column(nullable = false)
-    @Size(min = 8)
     private String password;
     @Column(nullable = false,unique = true)
     @Size(min = 10,max = 11)
@@ -50,6 +48,6 @@ public class Student extends BaseEntity<Long> {
     private Long studentNumber;
 
 
-    @OneToMany (mappedBy = "student")
+    @OneToMany (mappedBy = "student" ,fetch = FetchType.EAGER)
     List<StudentLesson>studentLessons;
 }
