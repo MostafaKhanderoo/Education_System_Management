@@ -17,15 +17,15 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     @Override
     public Teacher save(Session session, Teacher teacher) {
         session.persist(teacher);
-        teacher.setUsername(teacher.getPersonnelCode().toString());
-        teacher.setPassword(teacher.getNationalCode());
-        return teacher;
+         return teacher;
     }
 
     @Override
     public Optional<Teacher> findById(Session session, Long id) {
         return Optional.of(session.get(Teacher.class, id));
     }
+
+
 
     @Override
     public void deleteByPersonnelCode(Session session, Long personnelCode) {
@@ -34,8 +34,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
 
     @Override
     public List<Teacher> findAll(Session session) {
-        List<Teacher> studentList = session.createQuery("from Teacher", Teacher.class).list();
-        return studentList;
+        List<Teacher> teacherList = session.createQuery("from Teacher", Teacher.class).list();
+        return teacherList;
     }
 
     @Override
@@ -44,6 +44,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         session.merge(teacher);
         return teacher;
     }
+
 
     public boolean login(Session session, Long personnelCode, String password) {
         try {
