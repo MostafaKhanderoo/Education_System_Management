@@ -22,6 +22,8 @@ public class StudentServiceImpl implements StudentService {
         try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
             try {
                 session.beginTransaction();
+                student.setUsername(student.getStudentNumber().toString());
+                student.setPassword(student.getNationalCode());
                 studentRepository.save(session, student);
                 session.getTransaction().commit();
                 return student;
