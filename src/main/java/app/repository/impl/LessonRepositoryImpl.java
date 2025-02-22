@@ -3,6 +3,7 @@ package app.repository.impl;
 import app.entity.Lesson;
 import app.entity.Teacher;
 import app.repository.LessonRepository;
+import app.service.Authentication.AuthenticationTeacher;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -44,10 +45,15 @@ public class LessonRepositoryImpl implements LessonRepository {
 
         return null;
     }
-    public  void setLessonForTeacher(Session session,Long lessonId, Long teacherId){
-        var lesson = session.get(Lesson.class,lessonId);
-        var teacher =session.get(Teacher.class,teacherId);
-         lesson.setTeacher(teacher);
+    public  void setLessonForTeacher(Session session,Long lessonNumber, Long personnelCode){
+try {
+    var lesson = session.createQuery("from  Lesson a where a.lessonNumber =:lessonNumber",Lesson.class).setParameter("lessonNumber",lessonNumber).getSingleResult();
+    var teacher =session.createQuery("from Teacher  a where a.personnelCode = :personnelCode",Teacher.class).setParameter("personnelCode",personnelCode).getSingleResult();
+    lesson.setTeacher(teacher);
+
+}catch (Exception e){
+throw new RuntimeException(e.getMessage());
+}
     }
 
 }
