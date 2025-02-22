@@ -20,6 +20,8 @@ private final TeacherRepositoryImpl teacherRepository;
       try(var session = SessionFactoryInstance.sessionFactory.openSession()){
           try {
               session.beginTransaction();
+              teacher.setUsername(teacher.getPersonnelCode().toString());
+              teacher.setPassword(teacher.getNationalCode());
               teacherRepository.save(session,teacher);
               session.getTransaction().commit();
               return teacher;
